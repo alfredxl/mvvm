@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">mvvm</string>
+    <string name="networkUnavailable">网络不可用</string>
+    <string name="userNotLoggedIn">用户未登录</string>
+    <string name="unknownMistake">未知错误</string>
+    <string name="javaTestPage">JAVA测试页面</string>
+    <string name="kotlinTestPage">Kotlin测试页面</string>
+    <string name="rxBusTest">RxBus测试</string>
+    <string name="networkRequestTest">网络请求测试</string>
+    <string name="kotlinExample">kotlin示例</string>
+    <string name="crossbar">-</string>
+    <string name="coroutineTesting">协程测试</string>
+</resources>
