@@ -24,7 +24,7 @@ public class BaseModel {
         this.compositeDisposable = compositeDisposable;
     }
 
-    public abstract class PlanningObserver<T> implements Observer<T> {
+    public abstract class BaseObserver<T> implements Observer<T> {
         private Disposable d;
 
         @Override
