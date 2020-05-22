@@ -2,6 +2,7 @@ package com.xwl.common.base;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,8 @@ import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+
+import com.xwl.common.BuildConfig;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -30,6 +33,7 @@ import java.lang.reflect.Type;
  */
 public abstract class BaseFragment<M extends BaseModel, V extends ViewDataBinding, VM extends BaseViewModel<M>>
         extends Fragment implements BaseContract {
+    private static final String TAG = BaseFragment.class.getSimpleName();
     protected V dataBinding;
     protected VM viewModel;
     private boolean isInit;
@@ -51,7 +55,27 @@ public abstract class BaseFragment<M extends BaseModel, V extends ViewDataBindin
             isInit = true;
             initView();
             initData();
+            if (BuildConfig.DEBUG) {
+                getDecorView(dataBinding.getRoot());
+            }
         }
+    }
+
+    private void getDecorView(View view) {
+        if (view.getParent() instanceof ViewGroup) {
+            getDecorView((View) view.getParent());
+        } else {
+            showViews(view, "");
+        }
+    }
+
+    private void showViews(View view, String value) {
+        if (view instanceof ViewGroup) {
+            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
+                showViews(((ViewGroup) view).getChildAt(i), value + "-");
+            }
+        }
+        Log.i(TAG, value + view.getClass().getName() + ":" + view.getId());
     }
 
     protected abstract void initView();

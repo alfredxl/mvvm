@@ -2,6 +2,9 @@ package com.xwl.common.base;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -12,6 +15,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.gyf.immersionbar.ImmersionBar;
+import com.xwl.common.BuildConfig;
 import com.xwl.common.R;
 
 import java.lang.reflect.ParameterizedType;
@@ -32,6 +36,7 @@ import java.lang.reflect.Type;
  */
 public abstract class BaseActivity<M extends BaseModel, V extends ViewDataBinding, VM extends BaseViewModel<M>>
         extends AppCompatActivity implements BaseContract {
+    private static final String TAG = BaseActivity.class.getSimpleName();
     protected V dataBinding;
     protected VM viewModel;
     private MaterialDialog dialog;
@@ -53,6 +58,26 @@ public abstract class BaseActivity<M extends BaseModel, V extends ViewDataBindin
         }
         initView();
         initData();
+        if (BuildConfig.DEBUG) {
+            getDecorView(dataBinding.getRoot());
+        }
+    }
+
+    private void getDecorView(View view) {
+        if (view.getParent() instanceof ViewGroup) {
+            getDecorView((View) view.getParent());
+        } else {
+            showViews(view, "");
+        }
+    }
+
+    private void showViews(View view, String value) {
+        if (view instanceof ViewGroup) {
+            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
+                showViews(((ViewGroup) view).getChildAt(i), value + "-");
+            }
+        }
+        Log.i(TAG, value + view.getClass().getName() + ":" + view.getId());
     }
 
     protected boolean needFull() {
