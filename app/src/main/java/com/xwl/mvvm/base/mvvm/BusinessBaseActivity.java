@@ -1,8 +1,6 @@
 package com.xwl.mvvm.base.mvvm;
 
 
-import android.util.DisplayMetrics;
-
 import androidx.databinding.ViewDataBinding;
 
 import com.xwl.common.base.BaseActivity;
@@ -30,12 +28,5 @@ public abstract class BusinessBaseActivity<M extends BusinessBaseModel, V extend
     @Override
     protected int getStatusBarColorResId() {
         return R.color.colorAccent;
-    }
-
-    @Override
-    protected int getTargetWightDp() {
-        // TODO 开发人员根据实际需求，返回相应的值（例如设计图如果是720px）,此处可返回720,1px=1dp
-        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
-        return (int) (displayMetrics.density * displayMetrics.widthPixels);
     }
 }
