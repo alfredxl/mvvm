@@ -2,6 +2,7 @@ package com.xwl.common.base;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,6 +47,7 @@ public abstract class BaseActivity<M extends BaseModel, V extends ViewDataBindin
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setDisPlayMetrics(getTargetWightDp());
         if (needFull()) {
             ImmersionBar.with(this)
                     .fitsSystemWindows(true)
@@ -61,6 +63,25 @@ public abstract class BaseActivity<M extends BaseModel, V extends ViewDataBindin
         if (BuildConfig.DEBUG) {
             getDecorView(dataBinding.getRoot());
         }
+    }
+
+    protected abstract int getTargetWightDp();
+
+    private void setDisPlayMetrics(int targetWightDp) {
+        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+        // 屏幕密度相对值
+        float oldDensity = displayMetrics.density;
+        // 字体因子
+        float oldScaledDensity = displayMetrics.scaledDensity;
+        // 目标屏幕密度相对值
+        float targetDensity = (float) displayMetrics.widthPixels / (float) targetWightDp;
+        // 目标屏幕密度绝对值
+        int targetDensityDpi = (int) (targetDensity * 160);
+        // 目标字体因子
+        float targetScaledDensity = (targetDensity / oldDensity) * oldScaledDensity;
+        displayMetrics.density = targetDensity;
+        displayMetrics.densityDpi = targetDensityDpi;
+        displayMetrics.scaledDensity = targetScaledDensity;
     }
 
     private void getDecorView(View view) {

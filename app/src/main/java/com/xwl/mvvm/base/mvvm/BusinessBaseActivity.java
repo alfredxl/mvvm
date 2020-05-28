@@ -1,9 +1,8 @@
 package com.xwl.mvvm.base.mvvm;
 
 
-import android.graphics.Color;
+import android.util.DisplayMetrics;
 
-import androidx.core.content.ContextCompat;
 import androidx.databinding.ViewDataBinding;
 
 import com.xwl.common.base.BaseActivity;
@@ -31,5 +30,11 @@ public abstract class BusinessBaseActivity<M extends BusinessBaseModel, V extend
     @Override
     protected int getStatusBarColorResId() {
         return R.color.colorAccent;
+    }
+
+    @Override
+    protected int getTargetWightDp() {
+        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+        return (int) (displayMetrics.density * displayMetrics.widthPixels);
     }
 }
