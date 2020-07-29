@@ -132,10 +132,26 @@ public abstract class BaseFragment<M extends BaseModel, V extends ViewDataBindin
     }
 
     @Override
+    public void showDialog(int tileRes, int messageRes, boolean endFinish) {
+        Activity activity = getActivity();
+        if (activity instanceof BaseActivity) {
+            ((BaseActivity) activity).showDialog(tileRes, messageRes, endFinish);
+        }
+    }
+
+    @Override
     public void showDialog(String tile, String message) {
         Activity activity = getActivity();
         if (activity instanceof BaseActivity) {
             ((BaseActivity) activity).showDialog(tile, message);
+        }
+    }
+
+    @Override
+    public void showDialog(String tile, String message, boolean endFinish) {
+        Activity activity = getActivity();
+        if (activity instanceof BaseActivity) {
+            ((BaseActivity) activity).showDialog(tile, message, endFinish);
         }
     }
 
