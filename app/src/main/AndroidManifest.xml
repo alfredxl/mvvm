@@ -12,6 +12,7 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:largeHeap="true"
         android:theme="@style/AppTheme"
         tools:targetApi="n">
         <activity android:name=".business.javatest.JavaTestActivity">
@@ -22,6 +23,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".business.kotlintest.KotlinTestActivity" />
+        <activity android:name=".business.sudoku.SudokuActivity" />
     </application>
 
 </manifest>

@@ -10,4 +10,5 @@
     <string name="kotlinExample">kotlin示例</string>
     <string name="crossbar">-</string>
     <string name="coroutineTesting">协程测试</string>
+    <string name="sudoku">数独</string>
 </resources>

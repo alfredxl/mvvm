@@ -50,5 +50,17 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/line_top" />
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_sudoku"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{(view)->itemClick.onClick(view)}"
+            android:text="@string/sudoku"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="16dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bt_coroutine" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

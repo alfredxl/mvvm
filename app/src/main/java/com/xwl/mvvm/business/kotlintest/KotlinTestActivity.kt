@@ -1,9 +1,11 @@
 package com.xwl.mvvm.business.kotlintest
 
+import android.content.Intent
 import android.view.View
 import androidx.databinding.library.baseAdapters.BR
 import com.xwl.mvvm.R
 import com.xwl.mvvm.base.mvvm.BusinessBaseActivity
+import com.xwl.mvvm.business.sudoku.SudokuActivity
 import com.xwl.mvvm.databinding.KotlinTestActivityBinding
 
 /**
@@ -39,6 +41,7 @@ class KotlinTestActivity : BusinessBaseActivity<KotlinTestModel, KotlinTestActiv
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.bt_coroutine -> viewModel.coroutine()
+            R.id.bt_sudoku -> startActivity(Intent(this, SudokuActivity::class.java))
         }
     }
 }
