@@ -96,7 +96,7 @@ object SudokuBind {
             val click = View.OnClickListener {
                 RxBus.getInstance().post("boxInput:${it.tag}")
             }
-            val layoutManager = GridLayoutManager(recyclerView.context, 10)
+            val layoutManager = GridLayoutManager(recyclerView.context, 5)
             val itemAnimator = DefaultItemAnimator()
             recyclerView.layoutManager = layoutManager
             recyclerView.itemAnimator = itemAnimator
