@@ -1,6 +1,7 @@
 package com.xwl.mvvm.business.sudoku.bind
 
 import android.content.Context
+import android.graphics.Color
 import android.graphics.Rect
 import android.view.LayoutInflater
 import android.view.View
@@ -27,6 +28,71 @@ import kotlinx.android.synthetic.main.sudoku_box_line.view.*
  * @Version: 1.0
  */
 object SudokuBind {
+
+    @JvmStatic
+    @BindingAdapter("sudokuBindBack")
+    fun sudokuBindBack(recyclerView: RecyclerView, size: Int) {
+        recyclerView.adapter?.notifyDataSetChanged() ?: let {
+            val layoutManager = GridLayoutManager(recyclerView.context, 3)
+            val itemAnimator = DefaultItemAnimator()
+            recyclerView.layoutManager = layoutManager
+            recyclerView.itemAnimator = itemAnimator
+            val adapter = object : RecyclerView.Adapter<ViewHolder>() {
+                override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+                    return object : ViewHolder(LayoutInflater.from(recyclerView.context).inflate(R.layout.sudoku_item_back, parent, false)) {}
+                }
+
+                override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+                    holder.itemView.setBackgroundColor()
+                }
+
+                override fun getItemCount(): Int {
+                    return size
+                }
+
+                operator fun get(x: Float): Color? {
+                    var x = x
+                    var r = 0.0f
+                    var g = 0.0f
+                    var b = 1.0f
+                    if (x >= 0.0f && x < 0.2f) {
+                        x = x / 0.2f
+                        r = 0.0f
+                        g = x
+                        b = 1.0f
+                    } else if (x >= 0.2f && x < 0.4f) {
+                        x = (x - 0.2f) / 0.2f
+                        r = 0.0f
+                        g = 1.0f
+                        b = 1.0f - x
+                    } else if (x >= 0.4f && x < 0.6f) {
+                        x = (x - 0.4f) / 0.2f
+                        r = x
+                        g = 1.0f
+                        b = 0.0f
+                    } else if (x >= 0.6f && x < 0.8f) {
+                        x = (x - 0.6f) / 0.2f
+                        r = 1.0f
+                        g = 1.0f - x
+                        b = 0.0f
+                    } else if (x >= 0.8f && x <= 1.0f) {
+                        x = (x - 0.8f) / 0.2f
+                        r = 1.0f
+                        g = 0.0f
+                        b = x
+                    }
+                    return if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                        Color.valueOf(r, g, b)
+                    } else {
+                        Color.rgb(r.toInt(), g.toInt(), b.toInt())
+                    }
+                }
+
+            }
+            recyclerView.adapter = adapter
+        }
+    }
+
     @JvmStatic
     @BindingAdapter("sudokuBindBoard")
     fun sudokuBindBoard(recyclerView: RecyclerView, board: Array<CharArray>) {
