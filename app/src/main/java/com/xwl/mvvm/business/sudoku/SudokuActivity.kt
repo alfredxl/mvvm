@@ -1,5 +1,6 @@
 package com.xwl.mvvm.business.sudoku
 
+import android.view.View
 import androidx.databinding.library.baseAdapters.BR
 import com.xwl.mvvm.R
 import com.xwl.mvvm.base.mvvm.BusinessBaseActivity
@@ -19,8 +20,11 @@ import kotlinx.android.synthetic.main.sudoku_activity.*
  * @Version: 1.0
  */
 class SudokuActivity : BusinessBaseActivity<SudokuModel, SudokuActivityBinding, SudokuViewModel>(),
-        SudokuContact {
-    override fun initView() {}
+        SudokuContact, View.OnClickListener {
+    override fun initView() {
+        dataBinding.setVariable(BR.itemClick, this)
+    }
+
     override fun initData() {}
     override fun getViewModelId(): Int {
         return BR.sudokuViewModel
@@ -36,5 +40,19 @@ class SudokuActivity : BusinessBaseActivity<SudokuModel, SudokuActivityBinding, 
 
     override fun setBoxSelect(position: Int) {
         recyclerViewBox?.adapter?.notifyItemChanged(position)
+    }
+
+    override fun onClick(v: View?) {
+        when (v?.id) {
+            R.id.reSet -> {
+                viewModel.resetBox()
+                recyclerViewBox?.adapter?.notifyDataSetChanged()
+            }
+            R.id.play -> {
+                viewModel.play {
+                    recyclerViewBox?.adapter?.notifyDataSetChanged()
+                }
+            }
+        }
     }
 }

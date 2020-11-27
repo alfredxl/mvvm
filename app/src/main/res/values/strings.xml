@@ -11,4 +11,6 @@
     <string name="crossbar">-</string>
     <string name="coroutineTesting">协程测试</string>
     <string name="sudoku">数独</string>
+    <string name="reset">重置</string>
+    <string name="play">生成</string>
 </resources>
