@@ -41,7 +41,7 @@ class BannerActivity : BusinessBaseActivity<BannerModel, BannerActivityBinding, 
                 .setIndicatorGravity(IndicatorConfig.Direction.RIGHT)
                 .setAdapter(object : BannerAdapter<String, RecyclerView.ViewHolder>(data) {
                     override fun getItemViewType(position: Int): Int {
-                        return if (data[getRealPosition(position)].endsWith(".mp4")) 1 else 0
+                        return if (data[position].endsWith(".mp4")) 1 else 0
                     }
 
                     override fun onCreateHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
@@ -54,7 +54,7 @@ class BannerActivity : BusinessBaseActivity<BannerModel, BannerActivityBinding, 
                     }
 
                     override fun onBindView(holder: RecyclerView.ViewHolder?, data: String?, position: Int, size: Int) {
-                        if (1 == getItemViewType(getRealPosition(position))) {
+                        if (1 == getItemViewType(position)) {
                             holder?.itemView?.findViewById<StandardGSYVideoPlayer>(R.id.player)?.run {
                                 isLooping = true
                                 setUp(data, true, context.cacheDir, null)
@@ -74,7 +74,7 @@ class BannerActivity : BusinessBaseActivity<BannerModel, BannerActivityBinding, 
 
                     override fun onPageSelected(position: Int) {
                         player?.onVideoPause()
-                        if (data[banner.adapter.getRealPosition(position)].endsWith(".mp4")) {
+                        if (data[position].endsWith(".mp4")) {
                             // 视频
                             player = banner.adapter.viewHolder.itemView.findViewById<StandardGSYVideoPlayer>(R.id.player)
                             player?.run {
