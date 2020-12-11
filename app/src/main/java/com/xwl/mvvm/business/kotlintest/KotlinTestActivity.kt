@@ -5,6 +5,7 @@ import android.view.View
 import androidx.databinding.library.baseAdapters.BR
 import com.xwl.mvvm.R
 import com.xwl.mvvm.base.mvvm.BusinessBaseActivity
+import com.xwl.mvvm.business.banner.BannerActivity
 import com.xwl.mvvm.business.sudoku.SudokuActivity
 import com.xwl.mvvm.databinding.KotlinTestActivityBinding
 
@@ -42,6 +43,7 @@ class KotlinTestActivity : BusinessBaseActivity<KotlinTestModel, KotlinTestActiv
         when (v?.id) {
             R.id.bt_coroutine -> viewModel.coroutine()
             R.id.bt_sudoku -> startActivity(Intent(this, SudokuActivity::class.java))
+            R.id.bt_banner -> startActivity(Intent(this, BannerActivity::class.java))
         }
     }
 }
