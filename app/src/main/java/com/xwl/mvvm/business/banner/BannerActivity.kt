@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.shuyu.gsyvideoplayer.GSYVideoManager
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer
+import com.shuyu.gsyvideoplayer.video.base.GSYVideoView
 import com.xwl.mvvm.R
 import com.xwl.mvvm.base.mvvm.BusinessBaseActivity
 import com.xwl.mvvm.business.banner.weight.NumIndicator
@@ -40,7 +41,7 @@ class BannerActivity : BusinessBaseActivity<BannerModel, BannerActivityBinding, 
                 .setIndicatorGravity(IndicatorConfig.Direction.RIGHT)
                 .setAdapter(object : BannerAdapter<String, RecyclerView.ViewHolder>(data) {
                     override fun getItemViewType(position: Int): Int {
-                        return if (data[position].endsWith(".mp4")) 1 else 0
+                        return if (data[getRealPosition(position)].endsWith(".mp4")) 1 else 0
                     }
 
                     override fun onCreateHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
@@ -53,7 +54,7 @@ class BannerActivity : BusinessBaseActivity<BannerModel, BannerActivityBinding, 
                     }
 
                     override fun onBindView(holder: RecyclerView.ViewHolder?, data: String?, position: Int, size: Int) {
-                        if (1 == getItemViewType(position)) {
+                        if (1 == getItemViewType(getRealPosition(position))) {
                             holder?.itemView?.findViewById<StandardGSYVideoPlayer>(R.id.player)?.run {
                                 isLooping = true
                                 setUp(data, true, context.cacheDir, null)
@@ -73,10 +74,16 @@ class BannerActivity : BusinessBaseActivity<BannerModel, BannerActivityBinding, 
 
                     override fun onPageSelected(position: Int) {
                         player?.onVideoPause()
-                        if (data[position].endsWith(".mp4")) {
+                        if (data[banner.adapter.getRealPosition(position)].endsWith(".mp4")) {
                             // 视频
                             player = banner.adapter.viewHolder.itemView.findViewById<StandardGSYVideoPlayer>(R.id.player)
-                            player?.onVideoResume()
+                            player?.run {
+                                if (currentState == GSYVideoView.CURRENT_STATE_PAUSE) {
+                                    onVideoResume()
+                                } else {
+                                    startPlayLogic()
+                                }
+                            }
                         } else {
                             player = null
                         }
@@ -88,11 +95,12 @@ class BannerActivity : BusinessBaseActivity<BannerModel, BannerActivityBinding, 
 
                 })
         banner.post {
-            banner.viewPager2.offscreenPageLimit = data.size
             if (data[0].endsWith(".mp4")) {
                 banner.adapter.viewHolder.itemView.findViewById<StandardGSYVideoPlayer>(R.id.player)?.startPlayLogic()
             }
         }
+        banner.isAutoLoop(true)
+        banner.setLoopTime(10000)
     }
 
     override fun initData() {}
