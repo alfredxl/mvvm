@@ -47,10 +47,11 @@ class BannerActivity : BusinessBaseActivity<BannerModel, BannerActivityBinding, 
             serviceWeak.get()?.run {
                 when (msg.what) {
                     1 -> {
-                        player?.let {
-                            val totalTime = it.gsyVideoManager.duration - it.gsyVideoManager.currentPosition
-                            mHandler?.sendEmptyMessageDelayed(2, if (totalTime <= 0) 0 else totalTime)
-                        }
+                        val time = player?.let {
+                            val result = it.gsyVideoManager.duration - it.gsyVideoManager.currentPosition
+                            if (result < 0) 0 else result
+                        } ?: 5000
+                        mHandler?.sendEmptyMessageDelayed(2, time)
                     }
                     2 -> {
                         banner.adapter?.let { adapter ->
