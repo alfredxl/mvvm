@@ -1,6 +1,9 @@
 package com.xwl.mvvm.business.banner
 
 import android.graphics.Color
+import android.os.Handler
+import android.os.Looper
+import android.os.Message
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,6 +23,7 @@ import com.xwl.mvvm.databinding.BannerActivityBinding
 import com.zhpan.indicator.enums.IndicatorSlideMode
 import com.zhpan.indicator.enums.IndicatorStyle
 import kotlinx.android.synthetic.main.banner_activity.*
+import java.lang.ref.WeakReference
 
 /**
  * @ProjectName: mvvm
@@ -34,7 +38,34 @@ import kotlinx.android.synthetic.main.banner_activity.*
  * @Version: 1.0
  */
 class BannerActivity : BusinessBaseActivity<BannerModel, BannerActivityBinding, BannerViewModel>() {
-    var player: StandardGSYVideoPlayer? = null
+    private var player: StandardGSYVideoPlayer? = null
+    private var mHandler: Handler? = BannerHandler(Looper.getMainLooper(), this)
+
+    class BannerHandler(looper: Looper, bannerActivity: BannerActivity) : Handler(looper) {
+        private val serviceWeak: WeakReference<BannerActivity> = WeakReference(bannerActivity)
+        override fun handleMessage(msg: Message) {
+            serviceWeak.get()?.run {
+                when (msg.what) {
+                    1 -> {
+                        player?.let {
+                            val totalTime = it.gsyVideoManager.duration - it.gsyVideoManager.currentPosition
+                            mHandler?.sendEmptyMessageDelayed(2, if (totalTime <= 0) 0 else totalTime)
+                        }
+                    }
+                    2 -> {
+                        banner.adapter?.let { adapter ->
+                            val current = banner.currentItem
+                            val next = (current + 1) % adapter.itemCount
+                            banner.setCurrentItem(next, true)
+                        }
+                    }
+                    else -> {
+                    }
+                }
+            }
+        }
+    }
+
 
     override fun initView() {
         val data = viewModel.getData()
@@ -77,6 +108,8 @@ class BannerActivity : BusinessBaseActivity<BannerModel, BannerActivityBinding, 
         banner.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
+                mHandler?.removeMessages(1)
+                mHandler?.removeMessages(2)
                 player?.onVideoPause()
                 banner.findViewWithTag<View>(position)?.let { itemRoot ->
                     val viewType = itemRoot.getTag(R.id.itemRoot) as Int
@@ -88,18 +121,26 @@ class BannerActivity : BusinessBaseActivity<BannerModel, BannerActivityBinding, 
                             } else {
                                 startPlayLogic()
                             }
+                            mHandler?.sendEmptyMessageDelayed(1, 5000)
                         }
                     } else {
                         player = null
+                        mHandler?.sendEmptyMessageDelayed(2, 5000)
                     }
                 }
             }
         })
         banner.offscreenPageLimit = data.size
         banner.post {
+            // 立即播放视频
             if (data[0].endsWith(".mp4")) {
-                banner.findViewWithTag<View>(0).findViewById<StandardGSYVideoPlayer>(R.id.player)?.startPlayLogic()
+                player = banner.findViewWithTag<View>(0).findViewById(R.id.player)
+                player?.run {
+                    startPlayLogic()
+                }
             }
+            // 切换下一页
+            mHandler?.sendEmptyMessageDelayed(if (player == null) 2 else 1, 5000)
         }
         val normalColor = Color.WHITE
         val checkedColor = ContextCompat.getColor(this, R.color.sudoSelect)
@@ -134,6 +175,9 @@ class BannerActivity : BusinessBaseActivity<BannerModel, BannerActivityBinding, 
 
     override fun onDestroy() {
         super.onDestroy()
+        mHandler?.removeMessages(1)
+        mHandler?.removeMessages(2)
+        mHandler = null
         GSYVideoManager.releaseAllVideos()
     }
 
