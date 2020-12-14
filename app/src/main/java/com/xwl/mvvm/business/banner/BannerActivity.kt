@@ -1,9 +1,11 @@
 package com.xwl.mvvm.business.banner
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.core.content.ContextCompat
 import androidx.databinding.library.baseAdapters.BR
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
@@ -15,6 +17,8 @@ import com.shuyu.gsyvideoplayer.video.base.GSYVideoView
 import com.xwl.mvvm.R
 import com.xwl.mvvm.base.mvvm.BusinessBaseActivity
 import com.xwl.mvvm.databinding.BannerActivityBinding
+import com.zhpan.indicator.enums.IndicatorSlideMode
+import com.zhpan.indicator.enums.IndicatorStyle
 import kotlinx.android.synthetic.main.banner_activity.*
 
 /**
@@ -96,6 +100,16 @@ class BannerActivity : BusinessBaseActivity<BannerModel, BannerActivityBinding, 
             if (data[0].endsWith(".mp4")) {
                 banner.findViewWithTag<View>(0).findViewById<StandardGSYVideoPlayer>(R.id.player)?.startPlayLogic()
             }
+        }
+        val normalColor = Color.WHITE
+        val checkedColor = ContextCompat.getColor(this, R.color.sudoSelect)
+        indicatorView.apply {
+            setSliderColor(normalColor, checkedColor)
+            setSliderWidth(resources.getDimensionPixelOffset(R.dimen.dp_8).toFloat())
+            setSliderHeight(resources.getDimensionPixelOffset(R.dimen.dp_4).toFloat())
+            setSlideMode(IndicatorSlideMode.WORM)
+            setIndicatorStyle(IndicatorStyle.CIRCLE)
+            setupWithViewPager(banner)
         }
     }
 
