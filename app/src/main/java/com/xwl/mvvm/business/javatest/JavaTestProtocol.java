@@ -19,6 +19,6 @@ import retrofit2.http.Query;
  * @Version: 1.0
  */
 public interface JavaTestProtocol {
-    @GET("getSingleJoke")
+    @GET("https://api.apiopen.top/getSingleJoke")
     Observable<JsonObject> getIpAddress(@Query("sid") String id);
 }

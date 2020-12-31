@@ -56,10 +56,10 @@
             android:id="@+id/bt_sudoku"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:onClick="@{(view)->itemClick.onClick(view)}"
             android:text="@string/sudoku"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginTop="16dp"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/bt_coroutine" />
 
@@ -67,11 +67,23 @@
             android:id="@+id/bt_banner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:onClick="@{(view)->itemClick.onClick(view)}"
             android:text="@string/banner"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginTop="16dp"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/bt_sudoku" />
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:onClick="@{(view)->itemClick.onClick(view)}"
+            android:text="@string/card"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bt_banner" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -25,6 +25,7 @@
         <activity android:name=".business.kotlintest.KotlinTestActivity" />
         <activity android:name=".business.sudoku.SudokuActivity" />
         <activity android:name=".business.banner.BannerActivity" />
+        <activity android:name=".business.card.CardActivity" />
     </application>
 
 </manifest>
