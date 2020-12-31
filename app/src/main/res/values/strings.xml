@@ -15,4 +15,11 @@
     <string name="play">生成</string>
     <string name="banner">banner</string>
     <string name="card">card</string>
+    <string name="systemTime">系统时间</string>
+    <string name="customTime">自定义时间</string>
+    <string name="meeting">会议</string>
+    <string name="attendance">考勤</string>
+    <string name="submit">提交</string>
+    <string name="success">成功</string>
+    <string name="failure">失败</string>
 </resources>

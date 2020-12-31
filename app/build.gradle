@@ -48,4 +48,5 @@ dependencies {
     implementation 'com.shuyu:GSYVideoPlayer:8.0.0'
     implementation "androidx.viewpager2:viewpager2:1.0.0"
     implementation 'com.github.zhpanvip:viewpagerindicator:1.0.7'
+    implementation 'com.jzxiang.pickerview:TimePickerDialog:1.0.1'
 }

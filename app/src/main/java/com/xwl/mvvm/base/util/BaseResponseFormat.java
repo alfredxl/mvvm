@@ -26,12 +26,11 @@ public class BaseResponseFormat {
     public static <D> BaseResponse<D> getFormatBean(JsonObject jsonObject, Type mType) {
         if (jsonObject != null) {
             try {
-                // TODO 根据自己的业务与后台的约定，制定统一响应消息格式
                 BaseResponse<D> baseResultBean = new BaseResponse<>();
                 baseResultBean.setCode(jsonObject.get("code").getAsInt());
-                baseResultBean.setMsg(jsonObject.get("message").getAsString());
-                if (jsonObject.has("result")) {
-                    return getFormatBean(baseResultBean, mType, jsonObject.get("result"));
+                baseResultBean.setMsg(jsonObject.get("msg").getAsString());
+                if (jsonObject.has("data")) {
+                    return getFormatBean(baseResultBean, mType, jsonObject.get("data"));
                 } else {
                     return baseResultBean;
                 }
