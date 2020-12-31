@@ -6,6 +6,10 @@ import androidx.databinding.library.baseAdapters.BR
 import com.xwl.mvvm.R
 import com.xwl.mvvm.base.mvvm.BusinessBaseViewModel
 import com.xwl.mvvm.base.util.DateFormatUtils
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.*
 
 /**
@@ -34,16 +38,20 @@ class CardViewModel(application: Application) : BusinessBaseViewModel<CardModel>
         }
 
     fun play() {
-        if (!isLoad) {
-            isLoad = true
-            if (timeStr.isEmpty()) {
-                timeStr = DateFormatUtils.getFormatToStringYmdsz(Date())
+        GlobalScope.launch(Dispatchers.Main) {
+            if (!isLoad) {
+                isLoad = true
+                if (timeStr.isEmpty()) {
+                    timeStr = DateFormatUtils.getFormatToStringYmdsz(Date())
+                }
+                val result = withContext(Dispatchers.IO) {
+                    val inputStream = getApplication<Application>().assets.open("17140-20201230120425501228.jpg")
+                    val byteArray = model.toByteArray(inputStream)
+                    model.clock(timeStr, deviceSn, byteArray)
+                }
+                showDialog(R.string.point, if (result) R.string.success else R.string.failure)
+                isLoad = false
             }
-            val inputStream = getApplication<Application>().assets.open("17140-20201230120425501228.jpg")
-            val byteArray = model.toByteArray(inputStream)
-            val result = model.clock(timeStr, deviceSn, byteArray)
-            showDialog(R.string.point, if (result) R.string.success else R.string.failure)
-            isLoad = false
         }
     }
 }

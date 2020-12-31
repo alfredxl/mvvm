@@ -29,6 +29,7 @@ class CardActivity : BusinessBaseActivity<CardModel, CardActivityBinding, CardVi
         View.OnClickListener {
     private var mDialogAll: TimePickerDialog? = null
     override fun initView() {
+        dataBinding.setVariable(BR.itemClick, this)
         radioGroupTime.setOnCheckedChangeListener { _, checkedId ->
             if (checkedId == R.id.rbt_system) {
                 viewModel.timeStr = ""
