@@ -4,6 +4,7 @@ package com.xwl.mvvm.base.net;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.xwl.mvvm.BuildConfig;
+import com.xwl.mvvm.base.util.UserUtil;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -53,7 +54,8 @@ public class LocalRetrofit {
                                         .header("Content-Type", "application/json;charset=UTF-8")
                                         .header("time", Objects.requireNonNull(map.get("time")))
                                         .header("User-Agent", Objects.requireNonNull(map.get("User-Agent")))
-                                        .header("sign", Objects.requireNonNull(map.get("sign")));
+                                        .header("sign", Objects.requireNonNull(map.get("sign")))
+                                        .header("token", UserUtil.getToken());
                                 Request request = requestBuilder.build();
                                 return chain.proceed(request);
                             }).connectTimeout(15, TimeUnit.SECONDS)

@@ -1,6 +1,9 @@
 package com.xwl.mvvm.business.cardlist
 
 import com.xwl.mvvm.base.mvvm.BusinessBaseModel
+import com.xwl.mvvm.base.net.LocalRetrofit
+import com.xwl.mvvm.base.net.NetCallBack
+import com.xwl.mvvm.business.cardlist.bean.LoginBean
 import java.util.*
 
 /**
@@ -23,8 +26,18 @@ class CardListModel : BusinessBaseModel() {
         return "https://face.hk-ai.cn:8094/captcha.jpg?uuid=$codeUUID"
     }
 
-    fun login(tvUserName: String, tvPassword: String, tvCode: String) {
-
+    fun <D> login(tvUserName: String, tvPassword: String, tvCode: String, callBack: NetCallBack<D?>?) {
+        val loginBean = LoginBean().apply {
+            this.username = tvUserName
+            this.password = tvPassword
+            this.captcha = tvCode
+            this.t = System.currentTimeMillis()
+            this.uuid = codeUUID
+        }
+        joinNet(
+                LocalRetrofit.getRetrofit().create(CardListProtocol::class.java)
+                        .sysLogin(loginBean), callBack
+        )
     }
 
 }

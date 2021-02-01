@@ -2,6 +2,8 @@ package com.xwl.mvvm.business.cardlist
 
 import android.app.Application
 import com.xwl.mvvm.base.mvvm.BusinessBaseViewModel
+import com.xwl.mvvm.base.net.BaseResponse
+import com.xwl.mvvm.base.util.UserUtil
 
 /**
  * @ProjectName: mvvm
@@ -21,6 +23,14 @@ class CardListViewModel(application: Application) : BusinessBaseViewModel<CardLi
     }
 
     fun login(tvUserName: String, tvPassword: String, tvCode: String) {
-
+        model.login(tvUserName, tvPassword, tvCode, object : BusinessNetCallBack<String?>("登录中...", false) {
+            override fun onRequestSuccess(baseResponse: BaseResponse<String?>?) {
+                super.onRequestSuccess(baseResponse)
+                baseResponse?.data?.let {
+                    UserUtil.setToken(it)
+                    showDialog("登录成功", it)
+                }
+            }
+        })
     }
 }

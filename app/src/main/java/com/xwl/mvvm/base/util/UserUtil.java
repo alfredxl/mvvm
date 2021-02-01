@@ -14,9 +14,21 @@ package com.xwl.mvvm.base.util;
  */
 public class UserUtil {
 
+    private static String token = "";
+
     // 获取登录状态
     public static boolean getLogIn() {
         // TODO 需要开发者完善用户的登录状态
         return true;
+    }
+
+    public static String getToken() {
+        return token;
+    }
+
+    public static void setToken(String token) {
+        if (token != null) {
+            UserUtil.token = token;
+        }
     }
 }

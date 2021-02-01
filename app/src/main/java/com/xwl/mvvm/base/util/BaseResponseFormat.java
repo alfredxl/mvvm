@@ -31,6 +31,8 @@ public class BaseResponseFormat {
                 baseResultBean.setMsg(jsonObject.get("msg").getAsString());
                 if (jsonObject.has("data")) {
                     return getFormatBean(baseResultBean, mType, jsonObject.get("data"));
+                } else if (jsonObject.has("token")) {
+                    return getFormatBean(baseResultBean, mType, jsonObject.get("token"));
                 } else {
                     return baseResultBean;
                 }
