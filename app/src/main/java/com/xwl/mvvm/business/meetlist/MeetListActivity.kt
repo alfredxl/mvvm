@@ -29,6 +29,7 @@ class MeetListActivity : BusinessBaseActivity<MeetListModel, MeetListActivityBin
     private val handler = Handler(Looper.getMainLooper(), Handler.Callback {
         if (it.what == 1) {
             initData()
+            it.target.removeMessages(1)
             it.target.sendEmptyMessageDelayed(1, 1000 * 60)
         }
         true
