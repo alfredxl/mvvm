@@ -33,6 +33,8 @@ public class BaseResponseFormat {
                     return getFormatBean(baseResultBean, mType, jsonObject.get("data"));
                 } else if (jsonObject.has("token")) {
                     return getFormatBean(baseResultBean, mType, jsonObject.get("token"));
+                } else if (jsonObject.has("page")) {
+                    return getFormatBean(baseResultBean, mType, jsonObject.get("page"));
                 } else {
                     return baseResultBean;
                 }

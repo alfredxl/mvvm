@@ -49,4 +49,9 @@ dependencies {
     implementation "androidx.viewpager2:viewpager2:1.0.0"
     implementation 'com.github.zhpanvip:viewpagerindicator:1.0.7'
     implementation 'com.jzxiang.pickerview:TimePickerDialog:1.0.1'
+    implementation 'com.scwang.smart:refresh-layout-kernel:2.0.0-alpha-1'
+    implementation 'com.scwang.smart:refresh-header-material:2.0.0-alpha-1'
+    implementation 'com.scwang.smart:refresh-header-classics:2.0.0-alpha-1'
+    implementation 'com.scwang.smart:refresh-header-radar:2.0.0-alpha-1'
+    implementation 'com.scwang.smart:refresh-footer-ball:2.0.0-alpha-1'
 }

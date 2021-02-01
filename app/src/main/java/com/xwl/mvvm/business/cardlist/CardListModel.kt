@@ -1,6 +1,9 @@
 package com.xwl.mvvm.business.cardlist
 
 import com.xwl.mvvm.base.mvvm.BusinessBaseModel
+import com.xwl.mvvm.base.net.LocalRetrofit
+import com.xwl.mvvm.base.net.NetCallBack
+import com.xwl.mvvm.business.cardlist.bean.CardListRequest
 
 /**
  * @ProjectName: mvvm
@@ -15,5 +18,10 @@ import com.xwl.mvvm.base.mvvm.BusinessBaseModel
  * @Version: 1.0
  */
 class CardListModel : BusinessBaseModel() {
-
+    fun <D> list(cardListRequest: CardListRequest, callBack: NetCallBack<D?>?) {
+        joinNet(
+                LocalRetrofit.getRetrofit().create(CardListProtocol::class.java)
+                        .list(cardListRequest), callBack
+        )
+    }
 }

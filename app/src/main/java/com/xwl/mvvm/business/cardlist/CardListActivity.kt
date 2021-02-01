@@ -1,6 +1,9 @@
 package com.xwl.mvvm.business.cardlist
 
 import androidx.databinding.library.baseAdapters.BR
+import com.scwang.smart.refresh.footer.ClassicsFooter
+import com.scwang.smart.refresh.header.ClassicsHeader
+import com.scwang.smart.refresh.layout.constant.SpinnerStyle
 import com.xwl.mvvm.R
 import com.xwl.mvvm.base.mvvm.BusinessBaseActivity
 import com.xwl.mvvm.databinding.CardListActivityBinding
@@ -19,10 +22,18 @@ import com.xwl.mvvm.databinding.CardListActivityBinding
  */
 class CardListActivity : BusinessBaseActivity<CardListModel, CardListActivityBinding, CardListViewModel>() {
     override fun initView() {
+        viewModel.activityTitle = getString(R.string.cardList)
+        dataBinding.refreshLayout.run {
+            setRefreshHeader(ClassicsHeader(this@CardListActivity))
+            setRefreshFooter(ClassicsFooter(this@CardListActivity).setSpinnerStyle(SpinnerStyle.FixedBehind))
+            setOnRefreshListener { viewModel.refresh { finishRefresh(it) } }
+            setOnLoadMoreListener { viewModel.loadMore { finishLoadMore(it) } }
+            autoRefresh()
+        }
     }
 
     override fun initData() {
-
+        viewModel.refresh { dataBinding.refreshLayout.finishRefresh(it) }
     }
 
     override fun getViewModelId(): Int {

@@ -1,5 +1,11 @@
 package com.xwl.mvvm.business.cardlist
 
+import com.google.gson.JsonObject
+import com.xwl.mvvm.business.cardlist.bean.CardListRequest
+import io.reactivex.Observable
+import retrofit2.http.Body
+import retrofit2.http.POST
+
 
 /**
  * @ProjectName: mvvm
@@ -14,4 +20,6 @@ package com.xwl.mvvm.business.cardlist
  * @Version: 1.0
  */
 interface CardListProtocol {
+    @POST("face/clockin/list")
+    fun list(@Body cardListRequest: CardListRequest): Observable<JsonObject?>?
 }
