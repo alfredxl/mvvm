@@ -51,7 +51,6 @@ class MeetListActivity : BusinessBaseActivity<MeetListModel, MeetListActivityBin
                     if (result) dataBinding.recyclerView.adapter?.notifyItemRangeChanged(start, itemCount)
                 }
             }
-            autoRefresh()
         }
         dataBinding.recyclerView.run {
             layoutManager = LinearLayoutManager(this@MeetListActivity)
@@ -61,6 +60,7 @@ class MeetListActivity : BusinessBaseActivity<MeetListModel, MeetListActivityBin
     }
 
     override fun initData() {
+        dataBinding.refreshLayout.autoRefresh()
         viewModel.refresh {
             dataBinding.refreshLayout.finishRefresh(it)
             if (it) dataBinding.recyclerView.adapter?.notifyDataSetChanged()

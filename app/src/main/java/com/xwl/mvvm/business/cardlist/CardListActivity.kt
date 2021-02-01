@@ -41,7 +41,6 @@ class CardListActivity : BusinessBaseActivity<CardListModel, CardListActivityBin
                     if (result) dataBinding.recyclerView.adapter?.notifyItemRangeChanged(start, itemCount)
                 }
             }
-            autoRefresh()
         }
         dataBinding.recyclerView.run {
             layoutManager = LinearLayoutManager(this@CardListActivity)
@@ -51,6 +50,7 @@ class CardListActivity : BusinessBaseActivity<CardListModel, CardListActivityBin
     }
 
     override fun initData() {
+        dataBinding.refreshLayout.autoRefresh()
         viewModel.refresh {
             dataBinding.refreshLayout.finishRefresh(it)
             if (it) dataBinding.recyclerView.adapter?.notifyDataSetChanged()
