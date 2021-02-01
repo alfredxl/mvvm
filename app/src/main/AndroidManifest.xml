@@ -27,6 +27,7 @@
         <activity android:name=".business.banner.BannerActivity" />
         <activity android:name=".business.card.CardActivity" />
         <activity android:name=".business.cardlist.CardListActivity" />
+        <activity android:name=".business.meetlist.MeetListActivity" />
     </application>
 
 </manifest>

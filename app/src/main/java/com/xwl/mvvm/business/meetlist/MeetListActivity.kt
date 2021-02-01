@@ -1,4 +1,4 @@
-package com.xwl.mvvm.business.cardlist
+package com.xwl.mvvm.business.meetlist
 
 import androidx.databinding.library.baseAdapters.BR
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -8,27 +8,27 @@ import com.scwang.smart.refresh.header.ClassicsHeader
 import com.scwang.smart.refresh.layout.constant.SpinnerStyle
 import com.xwl.mvvm.R
 import com.xwl.mvvm.base.mvvm.BusinessBaseActivity
-import com.xwl.mvvm.business.cardlist.weigth.CardListAdapter
-import com.xwl.mvvm.databinding.CardListActivityBinding
+import com.xwl.mvvm.business.meetlist.weigth.MeetListAdapter
+import com.xwl.mvvm.databinding.MeetListActivityBinding
 
 /**
  * @ProjectName: mvvm
- * @Package: com.xwl.mvvm.business.cardlist
- * @ClassName: CardListActivity
+ * @Package: com.xwl.mvvm.business.meetlist
+ * @ClassName: MeetList
  * @Description: java类作用描述
  * @Author: 谢文良
- * @CreateDate: 2021/2/1 8:52
+ * @CreateDate: 2021/2/1 15:27
  * @UpdateUser: 更新者
- * @UpdateDate: 2021/2/1 8:52
+ * @UpdateDate: 2021/2/1 15:27
  * @UpdateRemark: 更新说明
  * @Version: 1.0
  */
-class CardListActivity : BusinessBaseActivity<CardListModel, CardListActivityBinding, CardListViewModel>() {
+class MeetListActivity : BusinessBaseActivity<MeetListModel, MeetListActivityBinding, MeetListViewModel>() {
     override fun initView() {
-        viewModel.activityTitle = getString(R.string.cardList)
+        viewModel.activityTitle = getString(R.string.MTList)
         dataBinding.refreshLayout.run {
-            setRefreshHeader(ClassicsHeader(this@CardListActivity))
-            setRefreshFooter(ClassicsFooter(this@CardListActivity).setSpinnerStyle(SpinnerStyle.FixedBehind))
+            setRefreshHeader(ClassicsHeader(this@MeetListActivity))
+            setRefreshFooter(ClassicsFooter(this@MeetListActivity).setSpinnerStyle(SpinnerStyle.FixedBehind))
             setOnRefreshListener {
                 viewModel.refresh {
                     finishRefresh(it)
@@ -44,9 +44,9 @@ class CardListActivity : BusinessBaseActivity<CardListModel, CardListActivityBin
             autoRefresh()
         }
         dataBinding.recyclerView.run {
-            layoutManager = LinearLayoutManager(this@CardListActivity)
+            layoutManager = LinearLayoutManager(this@MeetListActivity)
             itemAnimator = DefaultItemAnimator()
-            adapter = CardListAdapter(viewModel.cardList.list)
+            adapter = MeetListAdapter(viewModel.meetList.list)
         }
     }
 
@@ -58,10 +58,10 @@ class CardListActivity : BusinessBaseActivity<CardListModel, CardListActivityBin
     }
 
     override fun getViewModelId(): Int {
-        return BR.cardListViewModel
+        return BR.meetListViewModel
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.card_list_activity
+        return R.layout.meet_list_activity
     }
 }
