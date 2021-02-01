@@ -1,11 +1,14 @@
 package com.xwl.mvvm.business.cardlist
 
 import androidx.databinding.library.baseAdapters.BR
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.scwang.smart.refresh.footer.ClassicsFooter
 import com.scwang.smart.refresh.header.ClassicsHeader
 import com.scwang.smart.refresh.layout.constant.SpinnerStyle
 import com.xwl.mvvm.R
 import com.xwl.mvvm.base.mvvm.BusinessBaseActivity
+import com.xwl.mvvm.business.cardlist.weigth.CardListAdapter
 import com.xwl.mvvm.databinding.CardListActivityBinding
 
 /**
@@ -26,14 +29,32 @@ class CardListActivity : BusinessBaseActivity<CardListModel, CardListActivityBin
         dataBinding.refreshLayout.run {
             setRefreshHeader(ClassicsHeader(this@CardListActivity))
             setRefreshFooter(ClassicsFooter(this@CardListActivity).setSpinnerStyle(SpinnerStyle.FixedBehind))
-            setOnRefreshListener { viewModel.refresh { finishRefresh(it) } }
-            setOnLoadMoreListener { viewModel.loadMore { finishLoadMore(it) } }
+            setOnRefreshListener {
+                viewModel.refresh {
+                    finishRefresh(it)
+                    if (it) dataBinding.recyclerView.adapter?.notifyDataSetChanged()
+                }
+            }
+            setOnLoadMoreListener {
+                viewModel.loadMore { result, start, itemCount ->
+                    finishLoadMore(result)
+                    if (result) dataBinding.recyclerView.adapter?.notifyItemRangeChanged(start, itemCount)
+                }
+            }
             autoRefresh()
+        }
+        dataBinding.recyclerView.run {
+            layoutManager = LinearLayoutManager(this@CardListActivity)
+            itemAnimator = DefaultItemAnimator()
+            adapter = CardListAdapter(viewModel.cardList.list)
         }
     }
 
     override fun initData() {
-        viewModel.refresh { dataBinding.refreshLayout.finishRefresh(it) }
+        viewModel.refresh {
+            dataBinding.refreshLayout.finishRefresh(it)
+            dataBinding.recyclerView.adapter?.notifyDataSetChanged()
+        }
     }
 
     override fun getViewModelId(): Int {

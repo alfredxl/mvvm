@@ -26,8 +26,9 @@ class CardListViewModel(application: Application) : BusinessBaseViewModel<CardLi
         load(true, block)
     }
 
-    fun loadMore(block: (success: Boolean) -> Unit) {
-        load(false, block)
+    fun loadMore(block: (success: Boolean, positionStart: Int, itemCount: Int) -> Unit) {
+        val start = cardList.list.size
+        load(false) { block(it, start, cardList.list.size - start) }
     }
 
     private fun load(isRefresh: Boolean, block: (success: Boolean) -> Unit) {
