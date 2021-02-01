@@ -85,5 +85,16 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/bt_banner" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_cardList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:onClick="@{(view)->itemClick.onClick(view)}"
+            android:text="@string/card"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bt_card" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

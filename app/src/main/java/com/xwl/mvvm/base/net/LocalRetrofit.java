@@ -53,8 +53,7 @@ public class LocalRetrofit {
                                         .header("Content-Type", "application/json;charset=UTF-8")
                                         .header("time", Objects.requireNonNull(map.get("time")))
                                         .header("User-Agent", Objects.requireNonNull(map.get("User-Agent")))
-                                        .header("sign", Objects.requireNonNull(map.get("sign")))
-                                        .header("token", "");
+                                        .header("sign", Objects.requireNonNull(map.get("sign")));
                                 Request request = requestBuilder.build();
                                 return chain.proceed(request);
                             }).connectTimeout(15, TimeUnit.SECONDS)

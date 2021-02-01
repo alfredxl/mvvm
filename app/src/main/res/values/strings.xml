@@ -22,4 +22,8 @@
     <string name="submit">提交</string>
     <string name="success">成功</string>
     <string name="failure">失败</string>
+    <string name="list">列表</string>
+    <string name="login">登录</string>
+    <string name="userName">用户名</string>
+    <string name="password">密码</string>
 </resources>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="itemClick"
+            type="android.view.View.OnClickListener" />
+
+        <variable
+            name="cardListViewModel"
+            type="com.xwl.mvvm.business.cardlist.CardListViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            layout="@layout/title_activity"
+            bind:commonTileClick="@{cardListViewModel.commonTileClick}"
+            bind:commonTitle="@{cardListViewModel.activityTitle}" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

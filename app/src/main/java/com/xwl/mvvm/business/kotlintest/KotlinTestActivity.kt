@@ -7,6 +7,7 @@ import com.xwl.mvvm.R
 import com.xwl.mvvm.base.mvvm.BusinessBaseActivity
 import com.xwl.mvvm.business.banner.BannerActivity
 import com.xwl.mvvm.business.card.CardActivity
+import com.xwl.mvvm.business.cardlist.CardListActivity
 import com.xwl.mvvm.business.sudoku.SudokuActivity
 import com.xwl.mvvm.databinding.KotlinTestActivityBinding
 
@@ -46,6 +47,7 @@ class KotlinTestActivity : BusinessBaseActivity<KotlinTestModel, KotlinTestActiv
             R.id.bt_sudoku -> startActivity(Intent(this, SudokuActivity::class.java))
             R.id.bt_banner -> startActivity(Intent(this, BannerActivity::class.java))
             R.id.bt_card -> startActivity(Intent(this, CardActivity::class.java))
+            R.id.bt_cardList -> startActivity(Intent(this, CardListActivity::class.java))
         }
     }
 }
