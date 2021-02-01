@@ -1,4 +1,4 @@
-package com.xwl.mvvm.business.cardlist.weight
+package com.xwl.mvvm.business.kotlintest.weight
 
 import android.app.Dialog
 import android.content.Context

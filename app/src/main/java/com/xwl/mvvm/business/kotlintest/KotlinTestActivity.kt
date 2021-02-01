@@ -8,6 +8,7 @@ import com.xwl.mvvm.base.mvvm.BusinessBaseActivity
 import com.xwl.mvvm.business.banner.BannerActivity
 import com.xwl.mvvm.business.card.CardActivity
 import com.xwl.mvvm.business.cardlist.CardListActivity
+import com.xwl.mvvm.business.kotlintest.weight.LoginDialog
 import com.xwl.mvvm.business.sudoku.SudokuActivity
 import com.xwl.mvvm.databinding.KotlinTestActivityBinding
 
@@ -24,9 +25,10 @@ import com.xwl.mvvm.databinding.KotlinTestActivityBinding
  * @Version: 1.0
  */
 class KotlinTestActivity : BusinessBaseActivity<KotlinTestModel, KotlinTestActivityBinding, KotlinTestViewModel>(),
-        View.OnClickListener {
+        View.OnClickListener, LoginDialog.LoginDialogListener {
     override fun initView() {
         dataBinding.setVariable(BR.itemClick, this)
+        LoginDialog(this, this).show()
     }
 
     override fun initData() {
@@ -43,11 +45,20 @@ class KotlinTestActivity : BusinessBaseActivity<KotlinTestModel, KotlinTestActiv
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.bt_coroutine -> viewModel.coroutine()
             R.id.bt_sudoku -> startActivity(Intent(this, SudokuActivity::class.java))
             R.id.bt_banner -> startActivity(Intent(this, BannerActivity::class.java))
             R.id.bt_card -> startActivity(Intent(this, CardActivity::class.java))
             R.id.bt_cardList -> startActivity(Intent(this, CardListActivity::class.java))
+            R.id.bt_MTList -> {
+            }
         }
+    }
+
+    override fun getCodeUrl(): String {
+        return viewModel.getCodeImageUrl()
+    }
+
+    override fun login(tvUserName: String, tvPassword: String, tvCode: String) {
+        viewModel.login(tvUserName, tvPassword, tvCode)
     }
 }

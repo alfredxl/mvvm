@@ -31,26 +31,6 @@
             android:orientation="horizontal"
             app:layout_constraintGuide_begin="38dp" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:text="@{String.valueOf(kotlinTestViewModel.times)}"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/bt_coroutine"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="@{(view)->itemClick.onClick(view)}"
-            android:text="@string/coroutineTesting"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/line_top" />
-
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/bt_sudoku"
@@ -61,7 +41,7 @@
             android:text="@string/sudoku"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/bt_coroutine" />
+            app:layout_constraintTop_toBottomOf="@id/line_top" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/bt_banner"
@@ -92,9 +72,20 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:onClick="@{(view)->itemClick.onClick(view)}"
-            android:text="@string/card"
+            android:text="@string/cardList"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/bt_card" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_MTList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:onClick="@{(view)->itemClick.onClick(view)}"
+            android:text="@string/MTList"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bt_cardList" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

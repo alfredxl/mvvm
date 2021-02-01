@@ -1,4 +1,4 @@
-package com.xwl.mvvm.business.cardlist.bean;
+package com.xwl.mvvm.business.kotlintest.bean;
 
 import java.io.Serializable;
 

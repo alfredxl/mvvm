@@ -15,6 +15,8 @@
     <string name="play">生成</string>
     <string name="banner">banner</string>
     <string name="card">card</string>
+    <string name="cardList">cardList</string>
+    <string name="MTList">MTList</string>
     <string name="systemTime">系统时间</string>
     <string name="customTime">自定义时间</string>
     <string name="meeting">会议</string>
