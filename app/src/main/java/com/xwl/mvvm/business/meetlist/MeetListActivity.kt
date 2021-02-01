@@ -1,5 +1,7 @@
 package com.xwl.mvvm.business.meetlist
 
+import android.os.Handler
+import android.os.Looper
 import androidx.databinding.library.baseAdapters.BR
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,6 +26,14 @@ import com.xwl.mvvm.databinding.MeetListActivityBinding
  * @Version: 1.0
  */
 class MeetListActivity : BusinessBaseActivity<MeetListModel, MeetListActivityBinding, MeetListViewModel>() {
+    private val handler = Handler(Looper.getMainLooper(), Handler.Callback {
+        if (it.what == 1) {
+            initData()
+            it.target.sendEmptyMessageDelayed(1, 1000 * 60)
+        }
+        true
+    })
+
     override fun initView() {
         viewModel.activityTitle = getString(R.string.MTList)
         dataBinding.refreshLayout.run {
@@ -55,6 +65,7 @@ class MeetListActivity : BusinessBaseActivity<MeetListModel, MeetListActivityBin
             dataBinding.refreshLayout.finishRefresh(it)
             if (it) dataBinding.recyclerView.adapter?.notifyDataSetChanged()
         }
+        handler.sendEmptyMessageDelayed(1, 1000 * 60)
     }
 
     override fun getViewModelId(): Int {
@@ -63,5 +74,10 @@ class MeetListActivity : BusinessBaseActivity<MeetListModel, MeetListActivityBin
 
     override fun getLayoutId(): Int {
         return R.layout.meet_list_activity
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        handler.removeMessages(1)
     }
 }
