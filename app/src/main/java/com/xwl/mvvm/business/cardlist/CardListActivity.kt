@@ -4,7 +4,9 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
+import android.content.Context
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
 import androidx.databinding.library.baseAdapters.BR
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -104,7 +106,7 @@ class CardListActivity : BusinessBaseActivity<CardListModel, CardListActivityBin
             })
             animator.start()
             val y = dataBinding.lineTop.y + dataBinding.groupSearch.height
-            val animatorY = ValueAnimator.ofFloat(dataBinding.lineMore.y, y.toFloat())
+            val animatorY = ValueAnimator.ofFloat(dataBinding.lineMore.y, y)
             animatorY.duration = 300
             animatorY.addUpdateListener { animation ->
                 (animation.animatedValue as Float).run {
@@ -124,7 +126,7 @@ class CardListActivity : BusinessBaseActivity<CardListModel, CardListActivityBin
             })
             animator.start()
             val y = dataBinding.lineTop.y
-            val animatorY = ValueAnimator.ofFloat(dataBinding.lineMore.y, y.toFloat())
+            val animatorY = ValueAnimator.ofFloat(dataBinding.lineMore.y, y)
             animatorY.duration = 300
             animatorY.addUpdateListener { animation ->
                 (animation.animatedValue as Float).run {
@@ -132,6 +134,8 @@ class CardListActivity : BusinessBaseActivity<CardListModel, CardListActivityBin
                 }
             }
             animatorY.start()
+            (getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
+                    .hideSoftInputFromWindow(currentFocus?.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
         }
     }
 
