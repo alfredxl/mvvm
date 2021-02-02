@@ -37,7 +37,9 @@ public class BusinessBaseViewModel<M extends BusinessBaseModel> extends BaseView
     }
 
     protected void onTitleClick(View view) {
-        onBackPressed();
+        if (view.getId() == R.id.iv_back) {
+            onBackPressed();
+        }
     }
 
     @Bindable
