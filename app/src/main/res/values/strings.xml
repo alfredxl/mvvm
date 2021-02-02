@@ -28,4 +28,8 @@
     <string name="login">登录</string>
     <string name="userName">用户名</string>
     <string name="password">密码</string>
+    <string name="jobNumber">工号</string>
+    <string name="startTime">开始时间</string>
+    <string name="endTime">结束时间</string>
+    <string name="search">搜索</string>
 </resources>

@@ -10,7 +10,6 @@ import com.xwl.mvvm.R
 import com.xwl.mvvm.base.mvvm.BusinessBaseActivity
 import com.xwl.mvvm.base.util.DateFormatUtils
 import com.xwl.mvvm.databinding.CardActivityBinding
-import kotlinx.android.synthetic.main.card_activity.*
 import java.util.*
 
 /**
@@ -30,14 +29,14 @@ class CardActivity : BusinessBaseActivity<CardModel, CardActivityBinding, CardVi
     private var mDialogAll: TimePickerDialog? = null
     override fun initView() {
         dataBinding.setVariable(BR.itemClick, this)
-        radioGroupTime.setOnCheckedChangeListener { _, checkedId ->
+        dataBinding.radioGroupTime.setOnCheckedChangeListener { _, checkedId ->
             if (checkedId == R.id.rbt_system) {
                 viewModel.timeStr = ""
             } else {
                 showTimeDialog()
             }
         }
-        radioGroupType.setOnCheckedChangeListener { _, checkedId ->
+        dataBinding.radioGroupType.setOnCheckedChangeListener { _, checkedId ->
             if (checkedId == R.id.rbt_attendance) {
                 viewModel.deviceSn = "V5YVG3EYI3SF2MAG"
             } else {

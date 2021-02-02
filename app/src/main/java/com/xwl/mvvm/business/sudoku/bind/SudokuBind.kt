@@ -5,6 +5,7 @@ import android.graphics.Rect
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
@@ -12,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.xwl.common.util.RxBus
 import com.xwl.mvvm.R
-import kotlinx.android.synthetic.main.sudoku_box_line.view.*
 
 /**
  * @ProjectName: mvvm
@@ -51,11 +51,13 @@ object SudokuBind {
                     val i = position / 9
                     val j = position % 9
                     val charItem = board[i][j]
-                    holder.itemView.tv_content.text = if ('.' == charItem) "" else charItem.toString()
-                    holder.itemView.tv_content.tag = position
-                    holder.itemView.tv_content.setOnClickListener(click)
-                    (recyclerView.tag as? Int)?.let {
-                        holder.itemView.tv_content.isActivated = it == position
+                    holder.itemView.findViewById<AppCompatTextView>(R.id.tv_content)?.run {
+                        text = if ('.' == charItem) "" else charItem.toString()
+                        tag = position
+                        setOnClickListener(click)
+                        (recyclerView.tag as? Int)?.let {
+                            isActivated = it == position
+                        }
                     }
                 }
 
@@ -106,9 +108,11 @@ object SudokuBind {
                 }
 
                 override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-                    holder.itemView.tv_content.text = input[position].toString()
-                    holder.itemView.tv_content.tag = position
-                    holder.itemView.tv_content.setOnClickListener(click)
+                    holder.itemView.findViewById<AppCompatTextView>(R.id.tv_content).run {
+                        text = input[position].toString()
+                        tag = position
+                        setOnClickListener(click)
+                    }
                 }
 
                 override fun getItemCount(): Int {

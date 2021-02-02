@@ -25,4 +25,13 @@ public class DateFormatUtils {
     private static SimpleDateFormat getSimpleDateFormatYmdsz() {
         return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.SIMPLIFIED_CHINESE);
     }
+
+    /*** to yyyyMMddHHmmssSSS ***/
+    public static String getFormatToStringYmdsSSS(Date date) {
+        return getSimpleDateFormatYmdsSSS().format(date);
+    }
+
+    private static SimpleDateFormat getSimpleDateFormatYmdsSSS() {
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.SIMPLIFIED_CHINESE);
+    }
 }

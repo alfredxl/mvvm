@@ -18,7 +18,7 @@ import java.util.List;
 public class PageBean<D> {
     private long totalCount;
     private int pageSize;
-    private int totalPage;
+    private int totalPage = Integer.MAX_VALUE;
     private int currPage;
     private final List<D> list = new ArrayList<>();
 

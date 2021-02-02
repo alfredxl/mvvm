@@ -22,7 +22,6 @@ import com.xwl.mvvm.base.mvvm.BusinessBaseActivity
 import com.xwl.mvvm.databinding.BannerActivityBinding
 import com.zhpan.indicator.enums.IndicatorSlideMode
 import com.zhpan.indicator.enums.IndicatorStyle
-import kotlinx.android.synthetic.main.banner_activity.*
 import java.lang.ref.WeakReference
 
 /**
@@ -54,10 +53,10 @@ class BannerActivity : BusinessBaseActivity<BannerModel, BannerActivityBinding, 
                         mHandler?.sendEmptyMessageDelayed(2, time)
                     }
                     2 -> {
-                        banner.adapter?.let { adapter ->
-                            val current = banner.currentItem
+                        dataBinding.banner.adapter?.let { adapter ->
+                            val current = dataBinding.banner.currentItem
                             val next = (current + 1) % adapter.itemCount
-                            banner.setCurrentItem(next, true)
+                            dataBinding.banner.setCurrentItem(next, true)
                         }
                     }
                     else -> {
@@ -70,7 +69,7 @@ class BannerActivity : BusinessBaseActivity<BannerModel, BannerActivityBinding, 
 
     override fun initView() {
         val data = viewModel.getData()
-        banner.adapter = object : RecyclerView.Adapter<ViewHolder>() {
+        dataBinding.banner.adapter = object : RecyclerView.Adapter<ViewHolder>() {
             override fun getItemViewType(position: Int): Int {
                 return if (data[position].endsWith(".mp4")) 1 else 0
             }
@@ -106,13 +105,13 @@ class BannerActivity : BusinessBaseActivity<BannerModel, BannerActivityBinding, 
                 return data.size
             }
         }
-        banner.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+        dataBinding.banner.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 mHandler?.removeMessages(1)
                 mHandler?.removeMessages(2)
                 player?.onVideoPause()
-                banner.findViewWithTag<View>(position)?.let { itemRoot ->
+                dataBinding.banner.findViewWithTag<View>(position)?.let { itemRoot ->
                     val viewType = itemRoot.getTag(R.id.itemRoot) as Int
                     if (viewType == 1) {
                         player = itemRoot.findViewById(R.id.player)
@@ -131,11 +130,11 @@ class BannerActivity : BusinessBaseActivity<BannerModel, BannerActivityBinding, 
                 }
             }
         })
-        banner.offscreenPageLimit = data.size
-        banner.post {
+        dataBinding.banner.offscreenPageLimit = data.size
+        dataBinding.banner.post {
             // 立即播放视频
             if (data[0].endsWith(".mp4")) {
-                player = banner.findViewWithTag<View>(0).findViewById(R.id.player)
+                player = dataBinding.banner.findViewWithTag<View>(0).findViewById(R.id.player)
                 player?.run {
                     startPlayLogic()
                 }
@@ -145,13 +144,13 @@ class BannerActivity : BusinessBaseActivity<BannerModel, BannerActivityBinding, 
         }
         val normalColor = Color.WHITE
         val checkedColor = ContextCompat.getColor(this, R.color.sudoSelect)
-        indicatorView.apply {
+        dataBinding.indicatorView.apply {
             setSliderColor(normalColor, checkedColor)
             setSliderWidth(resources.getDimensionPixelOffset(R.dimen.dp_8).toFloat())
             setSliderHeight(resources.getDimensionPixelOffset(R.dimen.dp_4).toFloat())
             setSlideMode(IndicatorSlideMode.WORM)
             setIndicatorStyle(IndicatorStyle.CIRCLE)
-            setupWithViewPager(banner)
+            setupWithViewPager(dataBinding.banner)
         }
     }
 

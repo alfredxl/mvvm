@@ -63,7 +63,6 @@ public class LocalRetrofit {
                     // 解决Date转换问题
                     Gson gson = new GsonBuilder()
                             .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
-                            .serializeNulls()
                             .create();
                     retrofit = new Retrofit.Builder()
                             .baseUrl(BASE_URL)

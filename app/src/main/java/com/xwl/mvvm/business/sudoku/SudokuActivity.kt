@@ -5,7 +5,6 @@ import androidx.databinding.library.baseAdapters.BR
 import com.xwl.mvvm.R
 import com.xwl.mvvm.base.mvvm.BusinessBaseActivity
 import com.xwl.mvvm.databinding.SudokuActivityBinding
-import kotlinx.android.synthetic.main.sudoku_activity.*
 
 /**
  * @ProjectName: mvvm
@@ -35,22 +34,22 @@ class SudokuActivity : BusinessBaseActivity<SudokuModel, SudokuActivityBinding, 
     }
 
     override fun getBoxSelect(): Int? {
-        return recyclerViewBox.tag as? Int
+        return dataBinding.recyclerViewBox.tag as? Int
     }
 
     override fun setBoxSelect(position: Int) {
-        recyclerViewBox?.adapter?.notifyItemChanged(position)
+        dataBinding.recyclerViewBox.adapter?.notifyItemChanged(position)
     }
 
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.reSet -> {
                 viewModel.resetBox()
-                recyclerViewBox?.adapter?.notifyDataSetChanged()
+                dataBinding.recyclerViewBox.adapter?.notifyDataSetChanged()
             }
             R.id.play -> {
                 viewModel.play {
-                    recyclerViewBox?.adapter?.notifyDataSetChanged()
+                    dataBinding.recyclerViewBox.adapter?.notifyDataSetChanged()
                 }
             }
         }
