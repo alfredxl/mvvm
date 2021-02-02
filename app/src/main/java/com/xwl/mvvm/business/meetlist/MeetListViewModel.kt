@@ -1,11 +1,15 @@
 package com.xwl.mvvm.business.meetlist
 
 import android.app.Application
+import android.text.TextUtils
+import androidx.databinding.Bindable
 import com.xwl.mvvm.base.bean.PageBean
 import com.xwl.mvvm.base.mvvm.BusinessBaseViewModel
 import com.xwl.mvvm.base.net.BaseResponse
+import com.xwl.mvvm.base.util.DateFormatUtils
 import com.xwl.mvvm.business.meetlist.bean.MeetBean
 import com.xwl.mvvm.business.meetlist.bean.MeetListRequest
+import java.util.*
 
 /**
  * @ProjectName: mvvm
@@ -22,6 +26,11 @@ import com.xwl.mvvm.business.meetlist.bean.MeetListRequest
 class MeetListViewModel(application: Application) : BusinessBaseViewModel<MeetListModel>(application) {
     val meetList = PageBean<MeetBean>()
 
+    @get:Bindable
+    val request = MeetListRequest().apply {
+        startTime = DateFormatUtils.getFormatToStringYmdsz(Date(System.currentTimeMillis() - 1000 * 60 * 60 * 24L))
+    }
+
     fun refresh(block: (success: Boolean) -> Unit) {
         load(true, block)
     }
@@ -32,20 +41,26 @@ class MeetListViewModel(application: Application) : BusinessBaseViewModel<MeetLi
     }
 
     private fun load(isRefresh: Boolean, block: (success: Boolean) -> Unit) {
-        val request = MeetListRequest().apply {
-            if (meetList.totalPage != 0) {
-                if (!isRefresh) {
-                    if (meetList.totalPage > meetList.currPage) {
-                        page = meetList.currPage + 1;
-                    } else {
-                        showToast("没有更多数据!")
-                        block(true)
-                        return@load
-                    }
+        request.run {
+            page = if (isRefresh) {
+                1
+            } else {
+                if (meetList.totalPage > meetList.currPage) {
+                    meetList.currPage + 1
+                } else {
+                    showToast("没有更多数据!")
+                    block(true)
+                    return@load
                 }
             }
         }
-        model.list(request, object : BusinessNetCallBack<PageBean<MeetBean?>?>("", false) {
+        val rq = (this.request.clone() as MeetListRequest).apply {
+            if (TextUtils.isEmpty(startTime)) startTime = null
+            if (TextUtils.isEmpty(endTime)) endTime = null
+            if (TextUtils.isEmpty(personnelName)) personnelName = null
+            if (TextUtils.isEmpty(personnelNo)) personnelNo = null
+        }
+        model.list(rq, object : BusinessNetCallBack<PageBean<MeetBean?>?>("", false) {
             override fun onRequestSuccess(baseResponse: BaseResponse<PageBean<MeetBean?>?>?) {
                 super.onRequestSuccess(baseResponse)
                 baseResponse?.data?.run {
