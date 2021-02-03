@@ -20,6 +20,7 @@ public class CardBean implements Serializable {
     private String personnelName;
     private String deviceName;
     private Date clockInTime;
+    private String pictureUrl;
 
     public String getPersonnelNo() {
         return personnelNo;
@@ -51,5 +52,13 @@ public class CardBean implements Serializable {
 
     public void setClockInTime(Date clockInTime) {
         this.clockInTime = clockInTime;
+    }
+
+    public String getPictureUrl() {
+        return pictureUrl;
+    }
+
+    public void setPictureUrl(String pictureUrl) {
+        this.pictureUrl = pictureUrl;
     }
 }

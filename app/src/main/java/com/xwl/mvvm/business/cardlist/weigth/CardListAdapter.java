@@ -1,5 +1,6 @@
 package com.xwl.mvvm.business.cardlist.weigth;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +11,10 @@ import androidx.databinding.ViewDataBinding;
 import androidx.databinding.library.baseAdapters.BR;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.xwl.mvvm.R;
 import com.xwl.mvvm.business.cardlist.bean.CardBean;
+import com.xwl.mvvm.databinding.CardListItemBinding;
 
 import java.util.List;
 
@@ -44,7 +47,14 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.CardLi
 
     @Override
     public void onBindViewHolder(@NonNull CardListViewHolder holder, int position) {
-        DataBindingUtil.getBinding(holder.itemView).setVariable(BR.cardBean, list.get(position));
+        CardListItemBinding cardListItemBinding = DataBindingUtil.getBinding(holder.itemView);
+        CardBean cardBean = list.get(position);
+        cardListItemBinding.setVariable(BR.cardBean, cardBean);
+        if (TextUtils.isEmpty(cardBean.getPictureUrl())) {
+            cardListItemBinding.ivHead.setImageDrawable(null);
+        } else {
+            Glide.with(cardListItemBinding.ivHead).load(cardBean.getPictureUrl()).centerCrop().into(cardListItemBinding.ivHead);
+        }
     }
 
     @Override

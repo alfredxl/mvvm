@@ -19,61 +19,71 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvName"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            android:gravity="center_horizontal"
+            android:layout_marginStart="19dp"
             android:singleLine="true"
             android:text="@{cardBean.personnelName}"
             android:textColor="@android:color/black"
             android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/tvCardTime"
             app:layout_constraintEnd_toStartOf="@id/tvUserId"
-            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvUserId"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
             android:singleLine="true"
             android:text="@{cardBean.personnelNo}"
             android:textColor="@android:color/black"
             android:textSize="14sp"
             app:layout_constraintBaseline_toBaselineOf="@id/tvName"
             app:layout_constraintEnd_toStartOf="@id/tvDeviceName"
-            app:layout_constraintHorizontal_weight="1"
             app:layout_constraintStart_toEndOf="@id/tvName" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvDeviceName"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
             android:singleLine="true"
             android:text="@{cardBean.deviceName}"
             android:textColor="@android:color/black"
             android:textSize="14sp"
             app:layout_constraintBaseline_toBaselineOf="@id/tvName"
-            app:layout_constraintEnd_toStartOf="@id/tvCardTime"
-            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintEnd_toStartOf="@id/ivHead"
             app:layout_constraintStart_toEndOf="@id/tvUserId" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivHead"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tvDeviceName"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvCardTime"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
             android:singleLine="true"
             android:text="@{DateFormatUtils.getFormatToStringYmdsz(cardBean.clockInTime)}"
             android:textColor="@color/colorAccent"
             android:textSize="14sp"
-            app:layout_constraintBaseline_toBaselineOf="@id/tvName"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_weight="2"
-            app:layout_constraintStart_toEndOf="@id/tvDeviceName" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tvName"
+            app:layout_constraintTop_toBottomOf="@id/tvName" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/line"
+            app:layout_constraintBottom_toBottomOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
